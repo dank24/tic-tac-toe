@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    height: 100vh;  width: 100vw; 
+    display:  flex; flex-direction: row;
+}
+
+#tic_first_sec {
+    height: 100;  width: 20%;
+    border: 1px solid black; flex-direction: column;
+    display: flex; align-items: center ;
+}
+#tic_first_sec > button {
+    position: relative; top: 11%;
+    width: 70%;  height: 4%;
+}
+#score_card_div{
+    height: 11%;  width: 90%;  overflow: hidden;
+    border: 1px solid black;
+    position: relative;  top: 10%;
+
+    display: flex; flex-direction: row; gap: 6%; justify-content: center;
+}
+#score_card_div > * {
+    display: flex; flex-direction: column ; align-items: center;  gap: 4%;
+    font-size: 20px;
+}
+#score_card_div > #user_score_div {
+    color: green;
+}
+#score_card_div > #round_div {
+    color: 0;
+    font-size: 12px;
+}
+#score_card_div > #user2_score_div {
+    color: red;
+}
+
+
+#tic_second_sec {
+    height: 100;  width: 80%; gap: 1%;
+    margin-right: 1px solid gold;  flex-direction: column;
+    display:  flex;  align-items: center; justify-content: center;
+}
+#game_div {
+    width: 500px;  height: 500px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-rows: 33% 33% 33%;
+    grid-template-columns: 33% 33% 33%;
+}
+#game_div > div {
+    border: 1px solid yellow; font-size: 90PX;
+    display: flex; justify-content: center; align-items: center;
+}
+#tic_second_sec > #playBtn {
+    height: 44px;  width: 50%;
+}
+
+#player_choose {
+    width: 500px; display: flex; flex-direction: column;
+    height: 500px; color: rgb(84, 84, 155);  position: absolute; gap: 2%;
+    align-items: center;  padding: 10px;  font-size: 20px;
+}
+#player_choose > div {
+    display: flex; flex-direction: row;
+    height: 95%; border: 1px solid green; gap: 2%;
+    width: 100%; justify-content: center; align-items: center;
+}
+#player_choose > div > div {
+    font-size: 180px;
+    width: 48%; height: 95%; border: 1px solid blue;
+    display: flex; justify-content: center;  align-items: center;
+}
+
+.hidden {
+    margin-left: 2000000000000000000px;
+    position: absolute; 
+}
