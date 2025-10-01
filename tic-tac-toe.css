@@ -6,6 +6,8 @@
 body {
     height: 100vh;  width: 100vw; 
     display:  flex; flex-direction: row;
+    background-color: grey;
+
 }
 
 #tic_first_sec {
@@ -14,14 +16,13 @@ body {
     display: flex; align-items: center ;
 }
 #tic_first_sec > button {
-    position: relative; top: 11%;
-    width: 70%;  height: 4%;
+    position: relative; top: 11.5%;
+    width: 55%;  height: 5%;
 }
 #score_card_div{
-    height: 11%;  width: 90%;  overflow: hidden;
-    border: 1px solid black;
-    position: relative;  top: 10%;
-
+    height: 9%;  width: 76%;  overflow: hidden;
+    border: 2px solid black;
+    position: relative;  top: 10%; 
     display: flex; flex-direction: row; gap: 6%; justify-content: center;
 }
 #score_card_div > * {
@@ -29,32 +30,40 @@ body {
     font-size: 20px;
 }
 #score_card_div > #user_score_div {
-    color: green;
+    font-size: 25px;
+    color: rgb(105, 187, 105);
 }
 #score_card_div > #round_div {
     color: 0;
-    font-size: 12px;
+    font-size: 13px;
 }
 #score_card_div > #user2_score_div {
-    color: red;
+    font-size: 25px;
+    color: rgb(243, 85, 85);
 }
 
 
 #tic_second_sec {
+    object-fit: cover;  background-color: rgb(95, 49, 49);
     height: 100;  width: 80%; gap: 1%;
     margin-right: 1px solid gold;  flex-direction: column;
     display:  flex;  align-items: center; justify-content: center;
 }
 #game_div {
+    z-index: 30000;
+    background-color: rgb(78, 68, 68);
+    color: white;
     width: 500px;  height: 500px;
-    border: 1px solid black;
+    border: 3px solid black;
+    box-shadow: 2px 2px 2px black;
     display: grid;
-    grid-template-rows: 33% 33% 33%;
-    grid-template-columns: 33% 33% 33%;
+    justify-content: center;
+    grid-template-rows: 33.33% 33.33% 33.33%;
+    grid-template-columns: 33.333% 33.333% 33.333%;
 }
-#game_div > div {
-    border: 1px solid yellow; font-size: 90PX;
-    display: flex; justify-content: center; align-items: center;
+#game_div > * {
+    border: 1px solid rgb(31, 31, 29); font-size: 90PX;  text-align: center; cursor: default;
+    display: flex; justify-content: center; align-items: center; background-color: transparent;
 }
 #tic_second_sec > #playBtn {
     height: 44px;  width: 50%;
@@ -62,24 +71,55 @@ body {
 
 #player_choose {
     width: 500px; display: flex; flex-direction: column;
-    height: 500px; color: rgb(84, 84, 155);  position: absolute; gap: 2%;
+    height: 500px; color: black;  position: absolute; gap: 2%;
     align-items: center;  padding: 10px;  font-size: 20px;
 }
 #player_choose > div {
     display: flex; flex-direction: row;
-    height: 95%; border: 1px solid green; gap: 2%;
+    height: 95%; gap: 2%;
     width: 100%; justify-content: center; align-items: center;
 }
 #player_choose > div > div {
     font-size: 180px;
-    width: 48%; height: 95%; border: 1px solid blue;
+    width: 48%; height: 95%; border-right: 1px solid black;   border-left: 1px solid black;
     display: flex; justify-content: center;  align-items: center;
+}
+#player_choose > div > div:hover {
+    background-color: rgb(190, 167, 167);
 }
 
 #result_sec {
     width: 500px; height: 500px; background-color: 0;
     position: absolute; display: flex; justify-content: center;  align-items: center;
     font-size: 30px;
+}
+#difficulty_div {
+    z-index: 200;   background-color: rgb(138, 95, 95);
+    height: 5%;   width: 50%;   gap: 2%;  box-shadow: -3px 3px 3px rgb(36, 35, 35);
+    display: flex; align-items: center;   justify-content: center;
+}
+#difficulty_div > button {
+    width: 30%;  height: 75%;  border: 1px solid black;  border-radius: 0.6rem;
+    
+}
+#infoDiv {
+    z-index: 200; background-color: rgb(136, 127, 127);  border: 2px solid black;
+    position: relative; top: 11%;  height: 10%;  width: 70%;  
+}
+#infoDiv > div {
+    display: flex; align-items: center;  width: 100%;  padding: 5px;  gap: 0%;
+}
+#infoDiv > div > :first-child {
+    width: 33%;
+}
+
+
+#table_img {
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    width: 900px;
+    height: 800px;
 }
 
 .hidden {

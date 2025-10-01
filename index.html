@@ -11,24 +11,38 @@
         <div id="score_card_div">
             <div id="user_score_div">
                 <h3>Player1</h3>
-                <h3>00</h3>
+                <h3 id="player1Score" class="scores">0</h3>
             </div>
             <div id="round_div">
                 <h3>Round:</h3>
-                <h4>1</h4>
+                <h4 id="round">1</h4>
             </div>
             <div id="user2_score_div">
                 <h3>Player2</h3>
-                <h3>00</h3>
+                <h3 id='player2Score' class="scores">0</h3>
             </div>
 
         </div>
-        <button>Start</button>
+<!-- 
+        <div id="infoDiv">
+            <div> <h4>Difficulty</h4> <h4>Easy</h4> </div>
+            <div> <h4>Player2</h4> <h4>CPU</h4> </div>
+        </div> -->
+
+        <button id="main_btn">Reset</button>
 
 
     </section>
 
     <section id="tic_second_sec">
+<!--         <div id="difficulty_div">
+            <button class="game_diff_level">Easy</button>
+            <button class="game_diff_level">Medium</button>
+            <button class="game_diff_level">Hard</button>
+        </div>
+ -->
+        <img src="./images//t4.png"  alt="table" id="table_img" />
+
         <div id="game_div">
             <section id="player_choose" >
                 <h3>Choose Symbol</h3>
@@ -38,6 +52,7 @@
                 </div>
             </section>
 
+            <section class="hidden" id="initial_display">Tic-Tac-Toe</section>
             <section class="hidden" id="result_sec"><h2></h2></section>
 
             <div class="cell hidden" id="0"></div>

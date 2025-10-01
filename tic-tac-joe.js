@@ -13,13 +13,22 @@ const secondSec = document.querySelector('#tic_second_sec')
 const gameDiv = document.querySelector('#game_div')
 const playerChoose = document.querySelector('#player_choose')
 const cells = document.querySelectorAll('.cell')
+const diffs = document.querySelectorAll('.game_diff_level')
 
+const scores = document.querySelectorAll('.scores')
+const round = document.querySelector('#round')
+const mainBtn = document.querySelector('#main_btn')
 
+let gameDifficulty = 'easy'
 let playerOneSymbol;
 let playerTwoSymbol;
 let turnToPlay = 0;
 let currentPlayer = '';
 let playCount = 0;  
+
+mainBtn.addEventListener('click', () => {
+    mainBtn.innerHTML == 'Reset' && ( location.reload() )
+})
 
 secondSec.addEventListener('click', e => {
     const id = e.target.id;
@@ -37,30 +46,91 @@ secondSec.addEventListener('click', e => {
     }
 })
 
-function handleCells(field, value, setField, setValue) {
-    cells.forEach(cell => {
-        cell[field] == value  &&  (
-            cell[setField] = setValue
-        )
+diffs.forEach(diff => {
+    diff.addEventListener('click', () => {
+        gameDifficulty = diff.innerHTML
+        console.log(gameDifficulty)
+        
     })
+})
+
+function handleCells(field, value, setField, setValue) {
+    let int;
+    playCount = playCount + 1
+
+    int = setInterval(() => {
+        cells.forEach(cell => {
+            cell[field] == value  &&  (
+                cell[setField] = setValue
+            )
+        })
+
+        clearInterval(int)
+    }, 800);
 
 }
 
 function cpuPlayer() {
-    let invalidPlays = []
     const allPlays = '012345678'
+    let freeCells = []
+    let invalidPlays = []
 
     const cpuPlays = {
-        possiblePlays: '',
+        possiblePlays: [],
         optimalPlays: '',
         urgentPlay: '',
     } //
     const playerPlays = {
         possiblePlays: '',
-        optimalPlay: '',
+        optimalPlays: '',
     }  //
 
-    const getPlays = () => {
+    getPlays()
+     console.log(playerPlays.optimalPlays)
+     console.log(cpuPlays.optimalPlays)
+
+    if(playCount < 9 )  {
+        switch(true) {
+            case (cpuPlays.urgentPlay !== '' && currentPlayer === 'player2') : 
+                const use = getCpuPlayValue(cpuPlays.urgentPlay)
+                handleCells('id', use, 'innerHTML', symbols[playerTwoSymbol]);
+    
+                filledCells.player2.push(use);
+                currentPlayer = 'player1';
+                turnToPlay = playerOneSymbol
+                playGame()
+                break ;
+    
+            case (cpuPlays.optimalPlays  !== '') : 
+                console.log('play to wun')
+                break;
+    
+            case (currentPlayer == 'player2' && cpuPlays.urgentPlay == ''): 
+                const play = freeCells[Math.floor(Math.random() * freeCells.length)];
+                handleCells('id', play, 'innerHTML', symbols[playerTwoSymbol] );
+    
+                filledCells.player2.push(play);
+                currentPlayer = 'player1';
+                turnToPlay = playerOneSymbol;
+                playGame()
+                break;
+    
+            default: 
+                console.log('def')
+        }
+    }
+
+
+
+//               helper functions                                             //
+    function updFreeCells (){
+        let s = [...filledCells.player1, ...filledCells.player2]
+        freeCells = allPlays.split('').filter(it =>  !s.find(its => its == it) ).join('')
+
+        console.log(freeCells)
+    }  //
+ 
+    function getPlays (){
         let p1 = []
         let p2 = []
         let crossPlays = []
@@ -83,6 +153,13 @@ function cpuPlayer() {
                 ) 
             })
 
+        })  //
+
+        p1.map(it => {
+            playerPlays.possiblePlays = [...playerPlays.possiblePlays, it.con]
+        })
+        p2.map(it => {
+            cpuPlays.possiblePlays = [...cpuPlays.possiblePlays, it.con]
         })
 
         const filteredPlays = p1.filter(play => p2.some(it => it.con == play.con) )
@@ -93,7 +170,7 @@ function cpuPlayer() {
 
         p1.map(it => {
             if(it.weight >= 2 && !crossPlays.includes(it.con) ) {
-                playerPlays.optimalPlay = it.con,
+                playerPlays.optimalPlays = it.con,
                 cpuPlays.urgentPlay = it.con
             }
             
@@ -106,15 +183,10 @@ function cpuPlayer() {
 
         })
 
-        let arr2 = [...filledCells.player1, ...filledCells.player2]
-        .map(its => {
-            
-        })  
-
-  
+        updFreeCells()
     }  //
 
-    const getCpuPlayValue = (str) => {
+    function getCpuPlayValue(str){
         let r;
         str.split('').map(char => {
             !filledCells.player1.includes(char)  &&  (
@@ -123,31 +195,27 @@ function cpuPlayer() {
         })
         return r
 
-    }
+    }  //
 
-    getPlays()
+    function cpuLevel() {
 
-    switch(true) {
-        case (cpuPlays.urgentPlay !== '' && currentPlayer === 'player2') : 
-            console.log('play now')
-            const use = getCpuPlayValue(cpuPlays.urgentPlay)
+    }  //
 
-            handleCells('id', use, 'innerHTML', symbols[playerTwoSymbol]);
-            filledCells.player2.push(use);
-            currentPlayer = 'player1';
-            break ;
+    cpuLevel()
 
-        case (currentPlayer == 'player2' && cpuPlays.urgentPlay == ''): 
-            console.log('normal play')
-            break;
+//
 
-        default: 
-            console.log('def')
-    }
+}
 
-    console.log(cpuPlays.urgentPlay)
-    console.log(playerPlays.optimalPlay)
-    console.log(invalidPlays)
+function playGame() {
+    let int;
+    int = setInterval(() => {
+        if(filledCells.player1.length >= 3 || filledCells.player2.length >= 3){
+            startGame(filledCells.player1, filledCells.player2)
+        } 
+
+        clearInterval(int)
+    }, 800);
 
 }
 
@@ -182,7 +250,16 @@ async function startGame(p1Data, p2Data) {
 
     }
 
-    const clFun = (result) => {
+    const clFun = (result, winner) => {
+        scores.forEach(score => {
+            score.id == winner  &&  (
+                console.log(Number(score.innerHTML)),
+                score.innerHTML = Number(score.innerHTML) + 1
+            )
+        })
+
+        round.innerHTML = Number(round.innerHTML) + 1
+
         h2.innerHTML = result;
         resultSec.classList.remove('hidden');
         resultSec.appendChild(h2);
@@ -196,20 +273,35 @@ async function startGame(p1Data, p2Data) {
     let playerOne = `Player One ${helpFunc(p1Data)}`
     let playerTwo = `Player two ${helpFunc(p2Data)}`
 
-    playerOne.includes('won') && (
-        result = 'Player One Wins',
-        clFun(result)
-    )
-    playerTwo.includes('won') && (
-        result = 'Player Two Wins',
-        clFun(result)
-    )
     if(playerOne.includes('lost') && playerTwo.includes('lost') && playCount === 9 ) {
+        let int;
         result = 'Draw',
         clFun(result)
+        
+        int = setInterval(() => {
+            
+            cells.forEach(cell => {
+                cell.innerHTML = '',
+                resultSec.classList.add('hidden')
+                cell.classList.remove('hidden')
+                filledCells.player1 = []
+                filledCells.player2 = []
+                playCount = 0
 
+                clearInterval(int)
+            })
+        }, 1200);
+        
+    } else if (playerOne.includes('won')) {
+        result = 'Player One Wins',
+        clFun(result, 'player1Score')
+    }  else if (playerTwo.includes('won') ) {
+        result = 'Player Two Wins',
+        clFun(result, 'player2Score')
     }
 
+    console.log(playCount)
+    console.log(playerOne, playerTwo)
     console.log(result)
 
 }
@@ -253,12 +345,7 @@ cells.forEach(cell => {
         } else {
             console.log('filled cell')
         }
-        console.log('play count:', playCount)
-
-
-        if(filledCells.player1.length >= 3 || filledCells.player2.length >= 3){
-            startGame(filledCells.player1, filledCells.player2)
-        } 
+        playGame()
 
         cFilledCells = [...filledCells.player1, ...filledCells.player2]
         cpuPlayer()
